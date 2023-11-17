@@ -1,0 +1,15 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+<h1>Registro de usuario</h1>
+
+{% if user %}
+
+<form action="/register/" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Registrar usuario</button>
+</form>
+
+
+{% endblock %}

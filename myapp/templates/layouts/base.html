@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tesk</title>
+    </head>
+
+    <body>
+        <!-- Barra de navegacion  -->
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Inicio</a>
+                </li>
+                <!-- Condicion para saber si el usuario esta autenticado o no -->
+                <!-- Si esta autenticado, muestra el link a "Proyectos" y el boton para cerrar sesion. -->
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="/proyectos">Proyectos</a>
+                </li>
+                <li>
+                    <a href="/logout">Cerrar sesion</a>
+                </li>
+                <!-- Si no esta autenticado, van a aparecer las opciones de "Registrar usuario" y/o "Iniciar sesion" -->
+                {% else %}
+                <li>
+                    <a href="/login">Iniciar sesion</a>
+                </li>
+                <li>
+                    <a href="/register">Registrar usuario</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <!-- Inicio del contenido -->
+        {% block content %}
+
+        {% endblock %}
+    </body>
+
+</html>
