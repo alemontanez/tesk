@@ -3,7 +3,9 @@ from . import views
 
 urlpatterns = [
     # Index
-    path("", views.home, name="home"),
+    path("", views.index, name="index"),
+    # Inicio
+    path("home/", views.home, name="home"),
     # Login de usuarios
     path("login/", views.login_user, name="login_user"),
     # Registro de usuarios
@@ -11,5 +13,7 @@ urlpatterns = [
     # Vista de proyectos despues del registro o inicio de sesion
     path("proyectos/", views.projects_view, name="proyectos"),
     # Cerrar sesion
-    path("logout/", views.signout, name="logout"),
+    path("logout/", views.signout_user, name="signout_use"),
+    # Crear tareas
+    path("tasks/create/", views.create_task, name="create_task"),
 ]

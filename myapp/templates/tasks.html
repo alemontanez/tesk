@@ -2,6 +2,19 @@
 
 {% block content %}
 
-    <h1>Tasks</h1>
+<h1>Tareas</h1>
+
+<form action="/tasks/create/" method="POST">
+    {% csrf_token %}
+    <label for="id_title">Titulo:</label>
+    <input type="text" name='title' id="id_title" required>
+
+    <label for="id_description">Descripcion:</label>
+    <input type="text" name='description' id="id_description" required>
+
+    <label for="id_important">Importante</label>
+    <input type="checkbox" id="id_important" name="important" />
+    <button>Guardar</button>
+</form>
 
 {% endblock %}

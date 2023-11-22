@@ -3,13 +3,21 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from .forms import CreateTask
 
 """
 Pagina de inicio
 """
+def index(request):
+    return render(request, "index.html")
 
 
+"""
+Pagina de inicio (usuario)
+"""
+@login_required
 def home(request):
     return render(request, "home.html")
 
@@ -17,8 +25,6 @@ def home(request):
 """
 Funcion para registrar a los nuevos usuario
 """
-
-
 def register_user(request):
     # Si el metodo HTTP es "GET", el servidor va a renderizar el Formulario de Registro
     if request.method == "GET":
@@ -54,8 +60,6 @@ def register_user(request):
 """
 Funcion para iniciar sesion
 """
-
-
 def login_user(request):
     # Cuando la solicitud que hace el cliente es "POST"
     if request.method == "POST":
@@ -66,7 +70,7 @@ def login_user(request):
         if user is not None:
             login(request, user)
             # Y luego de inciar sesion, se los redirecciona a la pagina de proyectos.
-            return redirect("proyectos")
+            return redirect("home")
         else:
             # Si existe algun error, se le informa el error.
             return render(
@@ -76,11 +80,31 @@ def login_user(request):
     else:
         return render(request, "login.html")
 
+"""
+Funcion para crear las tareas
+"""
+@login_required
+def create_task(request):
+    # Si el metodo HTTP es "GET", el servidor va a renderizar el Formulario de Tareas
+    if request.method == 'GET':
+        return render(request, 'tasks.html', {
+            'form': CreateTask
+        })
+    # Si el metodo es "POST", crea la tarea y la guarda en la BBDD
+    else:
+        form = CreateTask(request.POST)
+        new_task = form.save(commit=False)
+        # Aca verifica que el usuario este logeado
+        new_task.user = request.user
+        new_task.save()
+        return redirect('proyectos')
 
+@login_required
 def projects_view(request):
     return render(request, "proyectos.html")
 
-
-def signout(request):
+@login_required
+def signout_user(request):
+    # Función para cerrar sesión, al hacerlo nos redirigirá a nuestro index
     logout(request)
-    return redirect("home")
+    return redirect("index")
