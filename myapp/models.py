@@ -23,7 +23,6 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete = models.DO_NOTHING)
     project = models.ForeignKey(Project, on_delete = models.CASCADE, default = None)
     priority = models.ForeignKey(Priority, on_delete = models.DO_NOTHING, default = None)
-    priority = models.ForeignKey(Priority, on_delete = models.DO_NOTHING, default = None)
 
 
     def __str__(self):
