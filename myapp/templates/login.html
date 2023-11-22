@@ -1,4 +1,3 @@
-{% extends 'layouts/base.html' %}
 {% block content %}
 
 <h1>Iniciar sesion</h1>
@@ -8,9 +7,7 @@
     {% csrf_token %}
     <input type="text" placeholder="Usuario" required name="username">
     <input type="password" placeholder="Contraseña" required name="password">
-
     <button>Logear</button>
 </form>
-
 
 {% endblock %}

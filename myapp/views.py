@@ -1,11 +1,13 @@
 # Modulos
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from .forms import CreateTask
+
+from .models import Project
+from .forms import CreateTask, CreateProject
 
 """
 Pagina de inicio
@@ -13,14 +15,12 @@ Pagina de inicio
 def index(request):
     return render(request, "index.html")
 
-
 """
 Pagina de inicio (usuario)
 """
 @login_required
 def home(request):
     return render(request, "home.html")
-
 
 """
 Funcion para registrar a los nuevos usuario
@@ -56,7 +56,6 @@ def register_user(request):
             {"form": UserCreationForm, "error": "Las contraseñas no coinciden"},
         )
 
-
 """
 Funcion para iniciar sesion
 """
@@ -85,24 +84,51 @@ Funcion para crear las tareas
 """
 @login_required
 def create_task(request):
-    # Si el metodo HTTP es "GET", el servidor va a renderizar el Formulario de Tareas
     if request.method == 'GET':
-        return render(request, 'tasks.html', {
+        return render(request, 'create_task.html', {
             'form': CreateTask
         })
-    # Si el metodo es "POST", crea la tarea y la guarda en la BBDD
     else:
         form = CreateTask(request.POST)
         new_task = form.save(commit=False)
-        # Aca verifica que el usuario este logeado
         new_task.user = request.user
         new_task.save()
         return redirect('proyectos')
 
+"""
+Funcion para crear los proyectos
+"""
 @login_required
-def projects_view(request):
-    return render(request, "proyectos.html")
+def create_project(request):
+    if request.method == 'GET':
+        return render(request, 'create_project.html', {
+            'form': CreateProject
+        })
+    else:
+        form = CreateProject(request.POST)
+        new_project = form.save(commit=False)
+        new_project.user = request.user
+        new_project.save()
+        return redirect("home")
 
+"""
+Funcion para obtener todos los proyectos
+"""
+@login_required
+def get_all_projects(request):
+    projects = Project.objects.all()
+    return render(request, 'layouts/base.html', {'projects': projects})
+
+"""
+Funcion para ver la vista detallada de cada proyecto
+"""
+def project_view(request, project_id):
+    project = get_object_or_404(Project, pk = project_id)
+    return render(request, "project_view.html", {'project': project})
+
+"""
+Funcion para cerrar la sesion del usuario
+"""
 @login_required
 def signout_user(request):
     # Función para cerrar sesión, al hacerlo nos redirigirá a nuestro index

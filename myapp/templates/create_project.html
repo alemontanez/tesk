@@ -1,0 +1,16 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <label for="id_title">Titulo:</label>
+    <input type="text" name='title' id="id_title" required>
+
+    <label for="id_description">Descripcion:</label>
+    <input type="text" name='description' id="id_description" required>
+
+    <button>Crear</button>
+</form>
+
+{% endblock %}
