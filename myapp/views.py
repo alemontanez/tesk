@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
-from .models import Project
+from .models import Project, Task
 from .forms import CreateTask, CreateProject
 
 """
@@ -112,19 +112,25 @@ def create_project(request):
         return redirect("home")
 
 """
-Funcion para obtener todos los proyectos
-"""
-@login_required
-def get_all_projects(request):
-    projects = Project.objects.all()
-    return render(request, 'layouts/base.html', {'projects': projects})
-
-"""
 Funcion para ver la vista detallada de cada proyecto
 """
-def project_view(request, project_id):
+@login_required
+def main_section(request, project_id):
+
+    projects = Project.objects.all()
+
     project = get_object_or_404(Project, pk = project_id)
-    return render(request, "project_view.html", {'project': project})
+
+    tasks = Task.objects.filter(project_id = project_id)
+
+
+
+
+    return render(request, "main_section.html", {
+        'project': project,
+        'projects': projects,
+        'tasks': tasks,
+    })
 
 """
 Funcion para cerrar la sesion del usuario
