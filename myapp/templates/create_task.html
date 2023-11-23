@@ -1,7 +1,6 @@
-{% extends 'layouts/base.html' %}
+{% extends 'main_section.html' %}
 
-{% block content %}
-
+{% block create_task %}
 <form action="" method="POST">
     {% csrf_token %}
     <label for="id_title">Titulo:</label>
@@ -12,5 +11,4 @@
 
     <button>Guardar</button>
 </form>
-
 {% endblock %}

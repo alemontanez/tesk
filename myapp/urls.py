@@ -13,9 +13,7 @@ urlpatterns = [
 
     # Rutas de proyectos
     path("project/create/", views.create_project, name="create_project"),
-    path("project/<int:project_id>/", views.project_view, name="project_view"),
-    path("projects/", views.get_all_projects, name="get_all_projects"),
-
+    path("project/<int:project_id>/", views.main_section, name="main_section"),
 
     # Rutas de tareas
     path("task/create/", views.create_task, name="create_task"),
