@@ -1,0 +1,29 @@
+/* body {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: 1fr 6fr 1fr 1fr;
+	grid-template-rows: 11vh 89vh;
+	grid-template-areas:
+		'header header header header'
+		'aside main main main';
+}
+
+.aside_container {
+	border: 1px solid red;
+	grid-area: aside;
+}
+
+.navbar_container {
+	border: 1px solid red;
+	grid-area: header;
+}
+
+.main_container {
+	border: 1px solid red;
+	grid-area: main;
+} */
