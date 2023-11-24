@@ -1,38 +1,33 @@
 {% extends 'layouts/base.html' %}
 
 {% block view %}
+<p>Proyectos</p>
+<ul>
+    {% for project in projects %}
+    <li>
+        <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
 
-<article class="row">
-    <aside class="col-2 bg-dark text-white min-vh-100">
-        <p>Proyectos</p>
-        <ul>
-            {% for project in projects %}
-            <li>
-                <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
-            </li>
-            {% endfor %}
-        </ul>
-    </aside>
-    <div class="col-10">
-        <h1>Vista de proyecto</h1>
-        <p>{{project.title}}</p>
-        Tareas
-        {% for task in tasks %}
-        <ul>
-            <li>
-                <p>{{task.title}}</p>
-                <p>{{task.description}}</p>
-                <p>{{task.created}}</p>
-                <p>{{task.datecompleted}}</p>
-                <p>{{task.priority}}</p>
-            </li>
-        </ul>
-        {% endfor %}
-        {% block create_task %}
-        {% endblock %}
-        {% block create_project %}
-        {% endblock %}
-    </div>
-</article>
+
+{% block content %}
+<h1>{{project.title}}</h1>
+<p>Tareas</p>
+{% for task in tasks %}
+<ul>
+    <li>
+        <p>{{task.title}}</p>
+        <p>{{task.description}}</p>
+        <p>{{task.created}}</p>
+        <p>{{task.datecompleted}}</p>
+        <p>{{task.priority}}</p>
+    </li>
+</ul>
+{% endfor %}
+
+{% block create_task %}
+{% endblock %}
 
 {% endblock %}

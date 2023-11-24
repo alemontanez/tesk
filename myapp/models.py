@@ -19,7 +19,7 @@ class Task(models.Model):
     title = models.CharField(max_length = 100)
     description = models.TextField(blank = True)
     created = models.DateTimeField(auto_now_add = True)
-    datecompleted = models.DateTimeField(null = True)
+    datecompleted = models.DateTimeField(null = True, blank = True)
     user = models.ForeignKey(User, on_delete = models.DO_NOTHING)
     project = models.ForeignKey(Project, on_delete = models.CASCADE, default = None)
     priority = models.ForeignKey(Priority, on_delete = models.DO_NOTHING, default = None)
