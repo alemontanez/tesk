@@ -1,6 +1,19 @@
-{% extends 'main_section.html' %}
+{% extends 'layouts/base.html' %}
+
+{% block view %}
+<p>Proyectos</p>
+<ul>
+    {% for project in projects %}
+    <li>
+        <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
 
 {% block create_task %}
+<h1>Crear tarea</h1>
+{{error}}
 <form action="" method="POST">
     {% csrf_token %}
     <label for="id_title">Titulo:</label>
@@ -8,6 +21,27 @@
 
     <label for="id_description">Descripcion:</label>
     <input type="text" name='description' id="id_description" required>
+
+    <label for="id_user">Usuario asignado:</label>
+    <select name="user" id="id_user">
+        {% for user in users %}
+        <option value="{{ user.id }}">{{user.username}}</option>
+        {% endfor %}
+    </select>
+
+    <label for="id_project">Proyecto asignado:</label>
+    <select name="project" id="id_project">
+        {% for project in projects %}
+        <option value="{{ project.id }}">{{project.title}}</option>
+        {% endfor %}
+    </select>
+
+    <label for="id_priority">Prioridad:</label>
+    <select name="priority" id="id_priority">
+        {% for priority in prioritys %}
+        <option value="{{ priority.id }}">{{priority.prio}}</option>
+        {% endfor %}
+    </select>
 
     <button>Guardar</button>
 </form>

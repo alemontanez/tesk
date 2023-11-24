@@ -1,4 +1,4 @@
-/* body {
+body {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
@@ -26,4 +26,4 @@
 .main_container {
 	border: 1px solid red;
 	grid-area: main;
-} */
+}

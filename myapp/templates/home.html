@@ -1,6 +1,16 @@
 {% extends 'layouts/base.html' %}
-{% block content %}
 
+{% block home %}
+<p>Proyectos</p>
+<ul>
+    {% for project in projects %}
+    <li>
+        <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block home_view %}
 <p>Home</p>
-
 {% endblock %}

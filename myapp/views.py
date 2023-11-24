@@ -1,4 +1,5 @@
 # Modulos
+from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -6,7 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
-from .models import Project, Task
+from .models import Priority, Project, Task
 from .forms import CreateTask, CreateProject
 
 """
@@ -20,7 +21,8 @@ Pagina de inicio (usuario)
 """
 @login_required
 def home(request):
-    return render(request, "home.html")
+    projects = Project.objects.all()
+    return render(request, "home.html", {'projects': projects,})
 
 """
 Funcion para registrar a los nuevos usuario
@@ -84,25 +86,40 @@ Funcion para crear las tareas
 """
 @login_required
 def create_task(request):
+    projects = Project.objects.all()
+    users = User.objects.all()
+    priority = Priority.objects.all()
+
     if request.method == 'GET':
         return render(request, 'create_task.html', {
-            'form': CreateTask
+            'form': CreateTask,
+            'users': users,
+            'projects': projects,
+            'prioritys': priority,
         })
     else:
-        form = CreateTask(request.POST)
-        new_task = form.save(commit=False)
-        new_task.user = request.user
-        new_task.save()
-        return redirect('proyectos')
+        try:
+            form = CreateTask(request.POST)
+            new_task = form.save(commit=False)
+            new_task.user = request.user
+            new_task.save()
+            return redirect('home')
+        except ValueError:
+            return render(request, 'create_task.html', {
+                'form': CreateTask,
+                'error': 'Por favor ingrese informacion valida'
+            })
 
 """
 Funcion para crear los proyectos
 """
 @login_required
 def create_project(request):
+    projects = Project.objects.all()
     if request.method == 'GET':
         return render(request, 'create_project.html', {
-            'form': CreateProject
+            'form': CreateProject,
+            'projects': projects,
         })
     else:
         form = CreateProject(request.POST)
@@ -111,21 +128,15 @@ def create_project(request):
         new_project.save()
         return redirect("home")
 
+
 """
 Funcion para ver la vista detallada de cada proyecto
 """
 @login_required
 def main_section(request, project_id):
-
     projects = Project.objects.all()
-
     project = get_object_or_404(Project, pk = project_id)
-
     tasks = Task.objects.filter(project_id = project_id)
-
-
-
-
     return render(request, "main_section.html", {
         'project': project,
         'projects': projects,

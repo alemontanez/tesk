@@ -1,6 +1,18 @@
-{% extends 'main_section.html' %}
-{% block create_project %}
+{% extends 'layouts/base.html' %}
 
+{% block view %}
+<p>Proyectos</p>
+<ul>
+    {% for project in projects %}
+    <li>
+        <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block create_project %}
+<h1>Crear proyecto</h1>
 <form action="" method="POST">
     {% csrf_token %}
     <label for="id_title">Titulo:</label>
