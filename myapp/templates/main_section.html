@@ -18,11 +18,16 @@
 {% for task in tasks %}
 <ul>
     <li>
-        <p>{{task.title}}</p>
-        <p>{{task.description}}</p>
-        <p>{{task.created}}</p>
-        <p>{{task.datecompleted}}</p>
-        <p>{{task.priority}}</p>
+        <p>Título: {{task.title}}</p>
+        <p>Descripción: {{task.description}}</p>
+        <p>Fecha de creación: {{task.created}}</p>
+        <p>
+            {% if task.completed == True %}
+        <p>Fecha de cierre: {{task.datecompleted}}</p>
+        {% endif %}
+        </p>
+        <p>Prioridad: {{task.priority}}</p>
+        <p>Estado: {{task.condition}}</p>
     </li>
 </ul>
 {% endfor %}

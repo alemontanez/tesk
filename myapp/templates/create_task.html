@@ -43,6 +43,13 @@
         {% endfor %}
     </select>
 
+    <label for="id_condition">Estado:</label>
+    <select name="condition" id="id_condition">
+        {% for condition in conditions %}
+        <option value="{{ condition.id }}">{{condition.condition}}</option>
+        {% endfor %}
+    </select>
+
     <button>Guardar</button>
 </form>
 {% endblock %}

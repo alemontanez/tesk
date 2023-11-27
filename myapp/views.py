@@ -1,5 +1,4 @@
 # Modulos
-from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -7,7 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
-from .models import Priority, Project, Task
+from .models import Priority, Project, Task, TaskCondition
 from .forms import CreateTask, CreateProject
 
 """
@@ -37,14 +36,16 @@ def register_user(request):
         if request.POST["password1"] == request.POST["password2"]:
             try:
                 user = User.objects.create_user(
-                    username=request.POST["username"],
-                    password=request.POST["password1"],
+                    username = request.POST["username"],
+                    password = request.POST["password1"],
+                    first_name = request.POST["firstname"],
+                    last_name = request.POST["lastname"]
                 )
                 # Se guarda en la base de datos
                 user.save()
                 login(request, user)
                 # Y se lo redirecciona a la pagina de los proyectos.
-                return redirect("proyectos")
+                return redirect("home")
             # De existir un error, va a renderizar nuevamente el formulario
             except IntegrityError:
                 return render(
@@ -89,6 +90,7 @@ def create_task(request):
     projects = Project.objects.all()
     users = User.objects.all()
     priority = Priority.objects.all()
+    condition = TaskCondition.objects.all()
 
     if request.method == 'GET':
         return render(request, 'create_task.html', {
@@ -96,6 +98,7 @@ def create_task(request):
             'users': users,
             'projects': projects,
             'prioritys': priority,
+            'conditions': condition,
         })
     else:
         try:
