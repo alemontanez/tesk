@@ -5,7 +5,23 @@
 
 <form action="/register/" method="post">
     {% csrf_token %}
-    {{form.as_p}}
+
+    <label for="id_firstname">Nombre</label>
+    <input type="text" name="firstname" maxlength="150" autocapitalize="on" autocomplete="firstname" autofocus required id="id_firstname">
+
+    <label for="id_lastname">Apellido</label>
+    <input type="text" name="lastname" maxlength="150" autocapitalize="on" autocomplete="lastname" autofocus required id="id_lastname">
+
+    <label for="id_username">Usuario</label>
+
+    <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus required id="id_username">
+
+    <label for="id_password1">Contraseña</label>
+    <input type="password" name="password1" autocomplete="new-password" required id="id_password1">
+
+    <label for="id_password2">Confirme su contraseña</label>
+    <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
+
     <button>Registrar usuario</button>
 </form>
 

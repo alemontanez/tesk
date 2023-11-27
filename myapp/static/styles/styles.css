@@ -26,4 +26,6 @@ body {
 .main_container {
 	border: 1px solid red;
 	grid-area: main;
+	overflow: scroll;
+	overflow-x: hidden;
 }
