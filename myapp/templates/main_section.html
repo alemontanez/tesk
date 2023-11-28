@@ -23,16 +23,28 @@
         <p>Fecha de creación: {{task.created}}</p>
         <p>
             {% if task.completed == True %}
-        <p>Fecha de cierre: {{task.datecompleted}}</p>
-        {% endif %}
+            <p>Fecha de cierre: {{task.datecompleted}}</p>
+            {% endif %}
         </p>
         <p>Prioridad: {{task.priority}}</p>
         <p>Estado: {{task.condition}}</p>
+        <a href="{% url 'complete_task' task.id %}">Completar tarea</a>
+        <a href="{% url 'update_task' task.id %}">Editar tarea</a>
+        <a href="{% url 'delete_task' task.id %}">Borrar tarea</a>
     </li>
 </ul>
 {% endfor %}
 
 {% block create_task %}
+{% endblock %}
+
+{% block complete_task %}
+{% endblock %}
+
+{% block update_task %}
+{% endblock %}
+
+{% block delete_task %}
 {% endblock %}
 
 {% endblock %}

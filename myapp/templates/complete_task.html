@@ -1,0 +1,11 @@
+{% extends 'main_section.html' %}
+
+{% block complete_task %}
+
+<form method="post">
+    {% csrf_token %}
+    {{form}}
+    <button>Completar</button>
+</form>
+
+{% endblock %}

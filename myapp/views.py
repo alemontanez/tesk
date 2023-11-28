@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.utils import timezone
 
 from .models import Priority, Project, Task, TaskCondition
 from .forms import CreateTask, CreateProject
@@ -137,14 +138,17 @@ Funcion para ver la vista detallada de cada proyecto
 """
 @login_required
 def main_section(request, project_id):
-    projects = Project.objects.all()
-    project = get_object_or_404(Project, pk = project_id)
-    tasks = Task.objects.filter(project_id = project_id)
-    return render(request, "main_section.html", {
-        'project': project,
-        'projects': projects,
-        'tasks': tasks,
-    })
+    if request.method == 'GET':
+        projects = Project.objects.all()
+        project = get_object_or_404(Project, pk = project_id)
+        tasks = Task.objects.filter(project_id = project_id)
+        return render(request, "main_section.html", {
+            'project': project,
+            'projects': projects,
+            'tasks': tasks,
+        })
+
+
 
 """
 Funcion para cerrar la sesion del usuario
@@ -154,3 +158,38 @@ def signout_user(request):
     # Función para cerrar sesión, al hacerlo nos redirigirá a nuestro index
     logout(request)
     return redirect("index")
+
+
+
+def update_task(request, task_id):
+    if request.method == 'GET':
+        task = get_object_or_404(Task, pk = task_id)
+        form = CreateTask(instance = task)
+        return render(request, 'update_task.html', {
+                'form': form,
+                'task': task
+            })
+    else:
+        try:
+            task = get_object_or_404(Task, pk = task_id)
+            form = CreateTask(request.POST, instance = task)
+            form.save()
+            return redirect('home')
+        except ValueError:
+            return render(request, 'update_task.html', {'task': task, 'form': form, 'error': "Error actualizando la tarea" })
+
+
+def complete_task(request, task_id):
+    task = get_object_or_404(Task, pk = task_id, user = request.user)
+    if request.method == 'GET':
+        task.datecompleted = timezone.now()
+        task.completed = True
+        task.condition = TaskCondition(4)
+        task.save()
+        return redirect('home')
+
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, pk = task_id)
+    if request.method == 'GET':
+        task.delete()
+        return redirect('home')
