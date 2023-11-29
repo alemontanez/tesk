@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+# Modelo para proyectos
 class Project(models.Model):
     title = models.CharField(max_length = 100)
     description = models.TextField(blank = True)
@@ -9,18 +9,21 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+# Modelo para prioridades de las tareas
 class Priority(models.Model):
     prio = models.CharField(max_length = 25)
 
     def __str__(self):
         return self.prio
 
+# Modelo para las condiciones o estados de las tareas
 class TaskCondition(models.Model):
     condition = models.CharField(max_length = 25)
 
     def __str__(self):
         return self.condition
 
+# Modelo para las tareas
 class Task(models.Model):
     title = models.CharField(max_length = 100)
     description = models.TextField(blank = True)

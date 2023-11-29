@@ -24,6 +24,7 @@ def home(request):
     projects = Project.objects.all()
     return render(request, "home.html", {'projects': projects,})
 
+
 """
 Funcion para registrar a los nuevos usuario
 """
@@ -60,6 +61,7 @@ def register_user(request):
             {"form": UserCreationForm, "error": "Las contraseñas no coinciden"},
         )
 
+
 """
 Funcion para iniciar sesion
 """
@@ -83,6 +85,7 @@ def login_user(request):
     else:
         return render(request, "login.html")
 
+
 """
 Funcion para crear las tareas
 """
@@ -90,7 +93,7 @@ Funcion para crear las tareas
 def create_task(request):
     projects = Project.objects.all()
     users = User.objects.all()
-    priority = Priority.objects.all()
+    priority = Priority.objects.all()º
     condition = TaskCondition.objects.all()
 
     if request.method == 'GET':
@@ -113,6 +116,7 @@ def create_task(request):
                 'form': CreateTask,
                 'error': 'Por favor ingrese informacion valida'
             })
+
 
 """
 Funcion para crear los proyectos
@@ -149,7 +153,6 @@ def main_section(request, project_id):
         })
 
 
-
 """
 Funcion para cerrar la sesion del usuario
 """
@@ -160,7 +163,10 @@ def signout_user(request):
     return redirect("index")
 
 
-
+"""
+Funcion modificar tareas
+"""
+@login_required
 def update_task(request, task_id):
     if request.method == 'GET':
         task = get_object_or_404(Task, pk = task_id)
@@ -179,6 +185,10 @@ def update_task(request, task_id):
             return render(request, 'update_task.html', {'task': task, 'form': form, 'error': "Error actualizando la tarea" })
 
 
+"""
+Funcion para marcar tareas como completadas
+"""
+@login_required
 def complete_task(request, task_id):
     task = get_object_or_404(Task, pk = task_id, user = request.user)
     if request.method == 'GET':
@@ -188,6 +198,11 @@ def complete_task(request, task_id):
         task.save()
         return redirect('home')
 
+
+"""
+Funcion para eliminar tareas
+"""
+@login_required
 def delete_task(request, task_id):
     task = get_object_or_404(Task, pk = task_id)
     if request.method == 'GET':
