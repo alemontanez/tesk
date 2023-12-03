@@ -14,10 +14,15 @@ from .forms import CreateTask, CreateProject
 Pagina de inicio
 """
 def index(request):
-    return render(request, "index.html")
+    # Si hay una sesión iniciada e intenta moverse a la url de index, lo redirige a home
+    if request.user.is_authenticated:
+        return redirect("home")
+    # Sino renderiza nuestro index.html, donde podrá seleccionar login o register, o solo visualizar el index
+    else:
+        return render(request, "index.html")
 
 """
-Pagina de inicio (usuario)
+Pagina de inicio con usuario logueado
 """
 @login_required
 def home(request):
@@ -85,38 +90,14 @@ def login_user(request):
     else:
         return render(request, "login.html")
 
-
 """
-Funcion para crear las tareas
+Funcion para cerrar la sesion del usuario
 """
 @login_required
-def create_task(request):
-    projects = Project.objects.all()
-    users = User.objects.all()
-    priority = Priority.objects.all()º
-    condition = TaskCondition.objects.all()
-
-    if request.method == 'GET':
-        return render(request, 'create_task.html', {
-            'form': CreateTask,
-            'users': users,
-            'projects': projects,
-            'prioritys': priority,
-            'conditions': condition,
-        })
-    else:
-        try:
-            form = CreateTask(request.POST)
-            new_task = form.save(commit=False)
-            new_task.user = request.user
-            new_task.save()
-            return redirect('home')
-        except ValueError:
-            return render(request, 'create_task.html', {
-                'form': CreateTask,
-                'error': 'Por favor ingrese informacion valida'
-            })
-
+def signout_user(request):
+    # Función para cerrar sesión, al hacerlo nos redirigirá a nuestro index
+    logout(request)
+    return redirect("index")
 
 """
 Funcion para crear los proyectos
@@ -135,7 +116,36 @@ def create_project(request):
         new_project.user = request.user
         new_project.save()
         return redirect("home")
+"""
+Funcion para crear las tareas
+"""
+@login_required
+def create_task(request):
+    projects = Project.objects.all()
+    users = User.objects.all()
+    priority = Priority.objects.all()
+    condition = TaskCondition.objects.all()
 
+    if request.method == 'GET':
+        return render(request, 'create_task.html', {
+            'form': CreateTask,
+            'users': users,
+            'projects': projects,
+            'prioritys': priority,
+            'conditions': condition,
+        })
+    else:
+        try:
+            form = CreateTask(request.POST)
+            new_task = form.save(commit=False)
+            # new_task.user = request.user
+            new_task.save()
+            return redirect('home')
+        except ValueError:
+            return render(request, 'create_task.html', {
+                'form': CreateTask,
+                'error': 'Por favor ingrese informacion valida'
+            })
 
 """
 Funcion para ver la vista detallada de cada proyecto
@@ -152,17 +162,6 @@ def main_section(request, project_id):
             'tasks': tasks,
         })
 
-
-"""
-Funcion para cerrar la sesion del usuario
-"""
-@login_required
-def signout_user(request):
-    # Función para cerrar sesión, al hacerlo nos redirigirá a nuestro index
-    logout(request)
-    return redirect("index")
-
-
 """
 Funcion modificar tareas
 """
@@ -170,9 +169,11 @@ Funcion modificar tareas
 def update_task(request, task_id):
     if request.method == 'GET':
         task = get_object_or_404(Task, pk = task_id)
+        projects = Project.objects.all()
         form = CreateTask(instance = task)
         return render(request, 'update_task.html', {
                 'form': form,
+                'projects': projects,
                 'task': task
             })
     else:
@@ -190,7 +191,7 @@ Funcion para marcar tareas como completadas
 """
 @login_required
 def complete_task(request, task_id):
-    task = get_object_or_404(Task, pk = task_id, user = request.user)
+    task = get_object_or_404(Task, pk = task_id)
     if request.method == 'GET':
         task.datecompleted = timezone.now()
         task.completed = True
@@ -208,3 +209,16 @@ def delete_task(request, task_id):
     if request.method == 'GET':
         task.delete()
         return redirect('home')
+    
+"""
+Funcion para eliminar proyectos y todas sus tareas
+"""
+@login_required
+def delete_project(request, project_id):
+    project = get_object_or_404(Project, pk = project_id)
+    if request.method == 'GET':
+        project.delete()
+        return redirect('home')
+    
+
+

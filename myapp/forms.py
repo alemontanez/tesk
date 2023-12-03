@@ -12,3 +12,4 @@ class CreateProject(ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'description']
+
