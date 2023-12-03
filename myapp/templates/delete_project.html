@@ -1,0 +1,11 @@
+{% extends 'main_section.html' %}
+
+{% block delete_project %}
+
+<form method="post">
+    {% csrf_token %}
+    {{form}}
+    <button>Eliminar</button>
+</form>
+
+{% endblock %}

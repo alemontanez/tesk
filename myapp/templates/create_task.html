@@ -1,11 +1,14 @@
 {% extends 'layouts/base.html' %}
 
 {% block view %}
-<p>Proyectos</p>
+<h3>Proyectos</h3>
 <ul>
     {% for project in projects %}
     <li>
         <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
+        <a href="{% url 'delete_project' project.id %}"><i class='bx bxs-x-circle'></i></a>
+        {% block delete_project %}
+        {% endblock %}
     </li>
     {% endfor %}
 </ul>

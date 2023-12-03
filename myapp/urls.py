@@ -14,6 +14,7 @@ urlpatterns = [
     # Rutas de proyectos
     path("project/create/", views.create_project, name = "create_project"),
     path("project/<int:project_id>/", views.main_section, name = "main_section"),
+    path("project/delete<int:project_id>/", views.delete_project, name = "delete_project"),
 
     # Rutas de tareas
     path("task/create/", views.create_task, name = "create_task"),
