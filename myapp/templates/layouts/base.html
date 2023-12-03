@@ -6,16 +6,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tesk</title>
         <link rel="stylesheet" href="../../static/styles/styles.css">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
-    <body style="background-color: #959595;">
+    <!-- <body style="background-color: #959595;"> -->
         <section class="container">
             <header class="navbar_container">
                 <nav>
-                    <a href="#">Tesk</a>
                     <ul>
                         <!-- Condicion para saber si el usuario esta autenticado o no -->
                         <!-- Si esta autenticado, muestra el link a "Proyectos" y el boton para cerrar sesion. -->
+                        <li>
+                            <a href="#" class="tesk_icon">Tesk</a>
+                        </li>
                         {% if user.is_authenticated %}
                         <li>
                             <a href="/home">Inicio</a>
@@ -32,9 +35,6 @@
                         <!-- Si no esta autenticado, van a aparecer las opciones de "Registrar usuario" y/o "Iniciar sesion" -->
                         {% else %}
                         <li>
-                            <a href="/">Inicio</a>
-                        </li>
-                        <li>
                             <a href="/login">Iniciar sesion</a>
                         </li>
                         <li>
@@ -47,16 +47,20 @@
             <aside class="aside_container">
                 {% block home %}
                 {% endblock %}
+
                 {% block view %}
                 {% endblock %}
             </aside>
             <main class="main_container">
                 {% block home_view %}
                 {% endblock %}
+
                 {% block content %}
                 {% endblock %}
+
                 {% block create_project %}
                 {% endblock %}
+                
                 {% block create_task %}
                 {% endblock %}
             </main>

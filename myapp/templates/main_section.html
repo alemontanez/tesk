@@ -1,11 +1,14 @@
 {% extends 'layouts/base.html' %}
 
 {% block view %}
-<p>Proyectos</p>
+<h3>Proyectos</h3>
 <ul>
     {% for project in projects %}
     <li>
         <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
+        <a href="{% url 'delete_project' project.id %}"><i class='bx bxs-x-circle'></i></a>
+        {% block delete_project %}
+        {% endblock %}
     </li>
     {% endfor %}
 </ul>
@@ -14,11 +17,14 @@
 
 {% block content %}
 <h1>{{project.title}}</h1>
+
+
 <p>Tareas</p>
 {% for task in tasks %}
 <ul>
     <li>
         <p>Título: {{task.title}}</p>
+        <p>Usuario asignado: {{task.user}}</p>
         <p>Descripción: {{task.description}}</p>
         <p>Fecha de creación: {{task.created}}</p>
         <p>
@@ -35,6 +41,8 @@
 </ul>
 {% endfor %}
 
+
+
 {% block create_task %}
 {% endblock %}
 
@@ -45,6 +53,9 @@
 {% endblock %}
 
 {% block delete_task %}
+{% endblock %}
+
+{% block admin_projects %}
 {% endblock %}
 
 {% endblock %}

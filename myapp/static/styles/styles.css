@@ -2,30 +2,73 @@ body {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+	background-color: rgb(107, 113, 130);
 }
 
 .container {
 	display: grid;
 	grid-template-columns: 1fr 6fr 1fr 1fr;
-	grid-template-rows: 11vh 89vh;
+	grid-template-rows: 9vh 91vh;
 	grid-template-areas:
 		'header header header header'
 		'aside main main main';
 }
 
 .aside_container {
-	border: 1px solid red;
+	/* border: 1px solid red; */
+	background-color: rgb(53, 59, 74);
 	grid-area: aside;
 }
 
+.aside_container ul{
+	padding: 10px;
+}
+
+.aside_container li{
+	padding-bottom: 8px;
+	list-style: none;
+}
+
+.aside_container a{
+	text-decoration: none;
+	color: white;
+}
+
+.aside_container h3{
+	padding-left: 10px;
+	color: white;
+}
+
 .navbar_container {
-	border: 1px solid red;
+	/* border: 1px solid red; */
+	background-color: rgb(53, 59, 74);
 	grid-area: header;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+}
+
+.navbar_container ul{
+	display: inline-block;
+	margin: 0;
+	height: 100%;
+}
+
+.navbar_container li{
+	display: inline;
+}
+
+.navbar_container a{
+	text-decoration: none;
+	color: white;
 }
 
 .main_container {
-	border: 1px solid red;
+	/* border: 1px solid red; */
 	grid-area: main;
 	overflow: scroll;
 	overflow-x: hidden;
 }
+
+
