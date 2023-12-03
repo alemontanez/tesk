@@ -26,8 +26,22 @@ Pagina de inicio con usuario logueado
 """
 @login_required
 def home(request):
-    projects = Project.objects.all()
-    return render(request, "home.html", {'projects': projects,})
+    if request.method == 'GET':    
+        projects = Project.objects.all()
+        user = request.user
+        user_id = request.user.id
+        print(user)
+        print(user_id)
+        time = timezone.now()
+        # tasks = Task.objects.filter(user_id = user_id)
+        tasks = Task.objects.all()
+        return render(request, "home.html", {
+            'projects': projects, 
+            'user': user,
+            'user_id': user_id,
+            'time': time,
+            'tasks': tasks,
+            })
 
 
 """
@@ -111,11 +125,20 @@ def create_project(request):
             'projects': projects,
         })
     else:
-        form = CreateProject(request.POST)
-        new_project = form.save(commit=False)
-        new_project.user = request.user
-        new_project.save()
-        return redirect("home")
+        try:
+            form = CreateProject(request.POST)
+            new_project = form.save(commit=False)
+            new_project.user = request.user
+            new_project.save()
+            project_id = new_project.id
+            redirect_url = f'/project/{project_id}'
+            return redirect(redirect_url)
+        except ValueError:
+            return render(request, 'create_project.html', {
+                'form': CreateProject,
+                'error': 'Por favor ingrese informacion valida'
+            })
+
 """
 Funcion para crear las tareas
 """
@@ -138,9 +161,14 @@ def create_task(request):
         try:
             form = CreateTask(request.POST)
             new_task = form.save(commit=False)
-            # new_task.user = request.user
             new_task.save()
-            return redirect('home')
+
+            project_id = new_task.project.id
+            # Construir la URL de redirección
+            redirect_url = f'/project/{project_id}/'
+            # Redirigir a la URL del proyecto
+            return redirect(redirect_url)
+            # return redirect('home')
         except ValueError:
             return render(request, 'create_task.html', {
                 'form': CreateTask,

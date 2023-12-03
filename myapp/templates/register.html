@@ -1,29 +1,62 @@
-{% extends 'layouts/base.html' %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="es">
 
-<h1>Registro de usuario</h1>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tesk</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'register.css' %}" />
+    <link rel="stylesheet" href="../../static/styles/register.css" />
+</head>
 
-<form action="/register/" method="post">
-    {% csrf_token %}
+<body>
+    {% block content %}
+    <section class="register">
+        <div class="container">
+            <h1>Registrate</h1>
+            <p>Crea tu cuenta con tus datos</p>
+            <div class="forms">
+                <form action="/register/" method="post">
+                    {% csrf_token %}
+                    <div class="input-field">
+                        <label for="id_firstname">Nombre</label>
+                        <input type="text" name="firstname" maxlength="150" autocapitalize="on" autocomplete="firstname"
+                            autofocus required id="id_firstname">
+                    </div>
 
-    <label for="id_firstname">Nombre</label>
-    <input type="text" name="firstname" maxlength="150" autocapitalize="on" autocomplete="firstname" autofocus required id="id_firstname">
+                    <div class="input-field">
+                        <label for="id_lastname">Apellido</label>
+                        <input type="text" name="lastname" maxlength="150" autocapitalize="on" autocomplete="lastname"
+                            autofocus required id="id_lastname">
+                    </div>
 
-    <label for="id_lastname">Apellido</label>
-    <input type="text" name="lastname" maxlength="150" autocapitalize="on" autocomplete="lastname" autofocus required id="id_lastname">
+                    <div class="input-field">
+                        <label for="id_username">Usuario</label>
 
-    <label for="id_username">Usuario</label>
+                        <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username"
+                            autofocus required id="id_username">
+                    </div>
 
-    <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus required id="id_username">
+                    <div class="input-field">
+                        <label for="id_password1">Contraseña</label>
+                        <input type="password" name="password1" autocomplete="new-password" required id="id_password1">
+                    </div>
 
-    <label for="id_password1">Contraseña</label>
-    <input type="password" name="password1" autocomplete="new-password" required id="id_password1">
-
-    <label for="id_password2">Confirme su contraseña</label>
-    <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
-
-    <button>Registrar usuario</button>
-</form>
+                    <div class="input-field">
+                        <label for="id_password2">Confirme su contraseña</label>
+                        <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
+                    </div>
 
 
-{% endblock %}
+                    <button>Registrar usuario</button>
+                </form>
+                <a href="/login">Ya tenes cuenta? <b>Ingresa</b></a>
+            </div>
+            <a href="/">Volver a inicio</a>
+        </div>
+    </section>
+    {% endblock %}
+</body>
+
+</html>

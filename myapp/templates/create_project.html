@@ -1,30 +1,61 @@
 {% extends 'layouts/base.html' %}
 
 {% block view %}
-<h3>Proyectos</h3>
-<ul>
-    {% for project in projects %}
+<div class="logo-details">
+    <i class="bx bxl-python"></i>
+    <span class="logo_name">TESK</span>
+</div>
+<ul class="nav-links">
     <li>
-        <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
-        <a href="{% url 'delete_project' project.id %}"><i class='bx bxs-x-circle'></i></a>
-        {% block delete_project %}
-        {% endblock %}
+        <a href="/">
+            <i class="bx bx-home"></i>
+            <span class="link_name">Inicio</span>
+        </a>
     </li>
-    {% endfor %}
+    <li>
+        <div class="icon-link">
+            <a href="#">
+                <i class="bx bx-collection"></i>
+                <span class="link_name">Proyectos</span>
+            </a>
+            <i class="bx bxs-chevron-down arrow"></i>
+        </div>
+        <ul class="sub-menu">
+            {% for project in projects %}
+            <li>
+                <a href="{% url 'main_section' project.id %}">{{ project.title }}</a>
+                <a href="{% url 'delete_project' project.id %}" class="delete-link">x</i></a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <i class="bx bx-bell"></i>
+            <span class="link_name">Notificaciones</span>
+        </a>
+    </li>
 </ul>
 {% endblock %}
 
 {% block create_project %}
 <h1>Crear proyecto</h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    <label for="id_title">Titulo:</label>
-    <input type="text" name='title' id="id_title" required>
-
-    <label for="id_description">Descripcion:</label>
-    <input type="text" name='description' id="id_description" required>
-
-    <button>Crear</button>
-</form>
-
+<div class="contenedor">
+    <div class="container-form">
+        <div class="forms">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="input-field">
+                    <label for="id_title">Titulo:</label>
+                    <input type="text" name='title' id="id_title" required>
+                </div>
+                <div class="input-field">
+                    <label for="id_description">Descripcion:</label>
+                    <input type="text" name='description' id="id_description" required>
+                </div>
+                <button>Crear</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

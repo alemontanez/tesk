@@ -1,19 +1,74 @@
 {% extends 'layouts/base.html' %}
 
 {% block home %}
-<h3>Proyectos</h3>
-<ul>
-    {% for project in projects %}
+<div class="logo-details">
+    <i class="bx bxl-python"></i>
+    <span class="logo_name">TESK</span>
+</div>
+<ul class="nav-links">
     <li>
-        <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
-        <a href="{% url 'delete_project' project.id %}"><i class='bx bxs-x-circle'></i></a>
-        {% block delete_project %}
-        {% endblock %}
+        <a href="/">
+            <i class="bx bx-home"></i>
+            <span class="link_name">Inicio</span>
+        </a>
     </li>
-    {% endfor %}
+    <li>
+        <div class="icon-link">
+            <a href="#">
+                <i class="bx bx-collection"></i>
+                <span class="link_name">Proyectos</span>
+            </a>
+            <i class="bx bxs-chevron-down arrow"></i>
+        </div>
+        <ul class="sub-menu">
+            {% for project in projects %}
+            <li>
+                <a href="{% url 'main_section' project.id %}">{{ project.title }}</a>
+                <a href="{% url 'delete_project' project.id %}" class="delete-link">x</i></a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <i class="bx bx-bell"></i>
+            <span class="link_name">Notificaciones</span>
+        </a>
+    </li>
 </ul>
 {% endblock %}
 
 {% block home_view %}
-<p>Home</p>
+<header>
+    <div class="home_title">
+        <h1>Buen día {{ user.first_name }}</h1>
+    </div>
+    <div class="home_title">
+        <h4>{{time}}</h4>
+    </div>
+</header>
+
+<br>
+<h2>Tus tareas pendientes:</h2>
+<br>
+{% for task in tasks %}
+{% if task.completed == False %}
+<ul>
+    {% if task.user_id == user_id %}
+    <li>
+        <p>Título: {{task.title}}</p>
+        <p>Proyecto: {{task.project}}</p>
+        <p>Descripción: {{task.description}}</p>
+        <p>Fecha de creación: {{task.created}}</p>
+        <p>Prioridad {{task.prio}}</p>
+        <p>Estado: {{task.condition}}</p>
+        <br>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}
+{% endfor %}
+
+
+
 {% endblock %}

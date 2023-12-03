@@ -1,45 +1,86 @@
 {% extends 'layouts/base.html' %}
 
 {% block view %}
-<h3>Proyectos</h3>
-<ul>
-    {% for project in projects %}
+<div class="logo-details">
+    <i class="bx bxl-python"></i>
+    <span class="logo_name">TESK</span>
+</div>
+<ul class="nav-links">
     <li>
-        <a href="{% url 'main_section' project.id %}">{{project.title}}</a>
-        <a href="{% url 'delete_project' project.id %}"><i class='bx bxs-x-circle'></i></a>
-        {% block delete_project %}
-        {% endblock %}
+        <a href="/">
+            <i class="bx bx-home"></i>
+            <span class="link_name">Inicio</span>
+        </a>
     </li>
-    {% endfor %}
+    <li>
+        <div class="icon-link">
+            <a href="#">
+                <i class="bx bx-collection"></i>
+                <span class="link_name">Proyectos</span>
+            </a>
+            <i class="bx bxs-chevron-down arrow"></i>
+        </div>
+        <ul class="sub-menu">
+            {% for project in projects %}
+            <li>
+                <a href="{% url 'main_section' project.id %}">{{ project.title }}</a>
+                <a href="{% url 'delete_project' project.id %}" class="delete-link">x</i></a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <i class="bx bx-bell"></i>
+            <span class="link_name">Notificaciones</span>
+        </a>
+    </li>
 </ul>
 {% endblock %}
 
 
 {% block content %}
+
 <h1>{{project.title}}</h1>
-
-
-<p>Tareas</p>
-{% for task in tasks %}
-<ul>
-    <li>
-        <p>Título: {{task.title}}</p>
-        <p>Usuario asignado: {{task.user}}</p>
-        <p>Descripción: {{task.description}}</p>
-        <p>Fecha de creación: {{task.created}}</p>
-        <p>
-            {% if task.completed == True %}
-            <p>Fecha de cierre: {{task.datecompleted}}</p>
-            {% endif %}
-        </p>
-        <p>Prioridad: {{task.priority}}</p>
-        <p>Estado: {{task.condition}}</p>
-        <a href="{% url 'complete_task' task.id %}">Completar tarea</a>
-        <a href="{% url 'update_task' task.id %}">Editar tarea</a>
-        <a href="{% url 'delete_task' task.id %}">Borrar tarea</a>
-    </li>
-</ul>
-{% endfor %}
+<br>
+<div class="contenedor">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Usuario</th>
+                <th>Descripción</th>
+                <th>Fecha de creación</th>
+                <th>Fecha de cierre</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Completar</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{task.title}}</td>
+                <td>{{task.user}}</td>
+                <td>{{task.description}}</td>
+                <td>{{task.created}}</td>
+                <td>
+                    {% if task.completed == True %}
+                    {{task.datecompleted}}
+                    {% endif %}
+                </td>
+                <td>{{task.priority}}</td>
+                <td>{{task.condition}}</td>
+                <td><a href="{% url 'complete_task' task.id %}"><i class='bx bx-check-square'></i></a></td>
+                <td><a href="{% url 'update_task' task.id %}"><i class='bx bxs-edit'></i></a></td>
+                <td><a href="{% url 'delete_task' task.id %}"><i class='bx bx-x-circle'></i></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 
 
