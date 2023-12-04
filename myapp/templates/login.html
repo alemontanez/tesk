@@ -1,13 +1,41 @@
-{% block content %}
 
-<h1>Iniciar sesion</h1>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tesk</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'register.css' %}" />
+    <link rel="stylesheet" href="../../static/styles/register.css" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../static/images/logo-tesk-small.ico">
+  </head>
 
-{{error}}
-<form action="/login/" method="post">
-    {% csrf_token %}
-    <input type="text" placeholder="Usuario" required name="username">
-    <input type="password" placeholder="Contraseña" required name="password">
-    <button>Logear</button>
-</form>
-
-{% endblock %}
+  <body>
+    {% block content %}
+      <section class="register">
+        <div class="container">
+          <h1>¡Te damos la bienvenida de nuevo!</h1>
+          <p>Inicia sesion con tu cuenta.</p>
+          <div class="forms">
+            {{ error }}
+            <form action="/login/" method="post">
+              {% csrf_token %}
+              <div class="input-field">
+                <label for="username">Usuario</label>
+                <input type="text" placeholder="Usuario" required name="username" />
+              </div>
+              <div class="input-field">
+                <label for="password">Contraseña</label>
+                <input type="password" placeholder="Contraseña" required name="password" />
+              </div>
+              <button>Ingresar</button>
+            </form>
+          </div>
+          <a href="/register">No tenes cuenta? <b>Registrate ahora</b></a>
+          <a href="/">Volver a inicio</a>
+        </div>
+      </section>
+    {% endblock %}
+  </body>
+</html>

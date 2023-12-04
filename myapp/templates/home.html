@@ -1,6 +1,7 @@
 {% extends 'layouts/base.html' %}
 
 {% block home %}
+<<<<<<< HEAD
 <h3>Proyectos</h3>
 <ul>
     {% for project in projects %}
@@ -9,11 +10,74 @@
         <a href="{% url 'delete_project' project.id %}"><i class='bx bxs-x-circle'></i></a>
         {% block delete_project %}
         {% endblock %}
+=======
+<div class="logo-details">
+    <img src="../../static/images/logo-tesk-l.svg" alt="tesk-logo">
+</div>
+<ul class="nav-links">
+    <li>
+        <a href="/">
+            <i class="bx bx-home"></i>
+            <span class="link_name">Inicio</span>
+        </a>
     </li>
-    {% endfor %}
+    <li>
+        <div class="icon-link">
+            <a href="#">
+                <i class="bx bx-collection"></i>
+                <span class="link_name">Proyectos</span>
+            </a>
+            <i class="bx bxs-chevron-down arrow"></i>
+        </div>
+        <ul class="sub-menu">
+            {% for project in projects %}
+            <li>
+                <a href="{% url 'main_section' project.id %}">{{ project.title }}</a>
+                <a href="#" class="delete-link" onclick="showConfirmation('{{ project.id }}')">x</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <i class="bx bx-bell"></i>
+            <span class="link_name">Notificaciones</span>
+        </a>
+>>>>>>> devAle
+    </li>
 </ul>
 {% endblock %}
 
 {% block home_view %}
-<p>Home</p>
+<header class="home_header">
+    <div class="home_title">
+        <h1>{{moment}} {{ user.first_name }}</h1>
+    </div>
+    <div class="home_time">
+        <p>{{time}}</p>
+    </div>
+    <div class="home_subtitle">
+        <p>Accede rápidamente a tus tableros recientes, el buzón y los espacios de trabajo</p>
+    </div>
+</header>
+
+<h2>Tus tareas pendientes:</h2>
+<div class='flex-box'>
+{% for task in tasks %}
+{% if task.completed == False %}
+    {% if task.user_id == user_id %}
+        <div class='card'>
+            <p class='title'>{{task.title}}</p>
+            <p>Proyecto: {{task.project}}</p>
+            <p>Fecha de entrega: {{task.deadline}}</p>
+            <p>Prioridad: {{task.priority}}</p>
+            <p>Estado: {{task.condition}}</p>
+            <a href="{% url 'main_section' task.project.id %}">Ir al proyecto</a>
+            <a href="{% url 'update_task' task.id %}">Ir a la tarea</a>
+        </div>
+    {% endif %}
+{% endif %}
+{% endfor %}
+</div>
+
 {% endblock %}

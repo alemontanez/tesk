@@ -1,7 +1,219 @@
-{% extends 'layouts/base.html' %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
 
-{% block content %}
+<head>
 
-<p>Pagina principal</p>
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Tesk</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-{% endblock %}
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../../static/styles/landing/base.css">
+    <link rel="stylesheet" href="../../static/styles/landing/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="../../static/js/modernizr.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../static/images/logo-tesk-small.ico">
+
+</head>
+
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-jump">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+
+    <!-- header
+    ================================================== -->
+    <header class="s-header">
+
+        <div class="header-logo">
+            <a class="site-logo" href="/">
+                <img src="../../static/images/logo-tesk-font.svg" alt="Homepage">
+            </a>
+        </div>
+
+        <nav class="header-nav-wrap">
+            <ul class="header-nav">
+                <li class="current"><a href="/" title="Home">Inicio</a></li>
+                <li><a href="/register" title="Signup">Registrarse</a></li>
+                <li><a href="/login" title="Login">Iniciar sesion</a></li>
+            </ul>
+        </nav>
+
+        <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+    </header> <!-- end s-header -->
+
+
+    <!-- hero
+    ================================================== -->
+    <section class="s-hero" data-parallax="scroll" data-image-src="../../static/images/flyer.jpeg" data-natural-width=2500
+        data-natural-height=1400 data-position-y=center>
+
+        <div class="hero-left-bar"></div>
+
+        <div class="row hero-content">
+
+            <div class="column large-full hero-content__text">
+                <h1>
+                    Controla el progreso de tus
+                    proyectos y alcanza tus
+                    objetivos con Tesk
+                </h1>
+
+                <div class="hero-content__buttons">
+                    <a href="/register" class="btn btn--stroke">Empezar</a>
+                </div>
+            </div> <!-- end hero-content__text -->
+
+        </div> <!-- end hero-content -->
+
+        <ul class="hero-social">
+            <li class="hero-social__title">Siguenos</li>
+            <li>
+                <a href="#0" title="">Facebook</a>
+            </li>
+            <li>
+                <a href="#0" title="">YouTube</a>
+            </li>
+            <li>
+                <a href="#0" title="">Instagram</a>
+            </li>
+        </ul> <!-- end hero-social -->
+
+        <div class="hero-scroll">
+            <a href="#about" class="scroll-link smoothscroll">
+                Scroll para más
+            </a>
+        </div> <!-- end hero-scroll -->
+
+    </section> <!-- end s-hero -->
+
+    <!-- Social
+    ================================================== -->
+    <section class="s-social">
+
+        <div class="row social-content">
+            <div class="column">
+                <ul class="social-list">
+                    <li class="social-list__item">
+                        <a href="#0" title="">
+                            <span class="social-list__icon social-list__icon--facebook"></span>
+                            <span class="social-list__text">Facebook</span>
+                        </a>
+                    </li>
+                    <li class="social-list__item">
+                        <a href="#0" title="">
+                            <span class="social-list__icon social-list__icon--twitter"></span>
+                            <span class="social-list__text">Twitter</span>
+                        </a>
+                    </li>
+                    <li class="social-list__item">
+                        <a href="#0" title="">
+                            <span class="social-list__icon social-list__icon--instagram"></span>
+                            <span class="social-list__text">Instagram</span>
+                        </a>
+                    </li>
+                    <li class="social-list__item">
+                        <a href="#0" title="">
+                            <span class="social-list__icon social-list__icon--email"></span>
+                            <span class="social-list__text">Email</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div> <!-- end social-content -->
+
+    </section> <!-- end s-social -->
+
+
+    <!-- footer
+    ================================================== -->
+    <footer class="s-footer">
+
+        <div class="row footer-top">
+            <div class="column large-4 medium-5 tab-full">
+                <div class="footer-logo">
+                    <a class="site-footer-logo" href="/">
+                        <img src="../../static/images/logo-tesk-font.svg" alt="Homepage">
+                    </a>
+                </div> <!-- footer-logo -->
+                <p>
+                    Plataforma educativa de gestión de proyectos con Django responde a la necesidad de proporcionar a
+                    los estudiantes de programación una herramienta accesible y sin restricciones de licencia para
+                    aprender sobre el manejo de proyectos.
+                </p>
+            </div>
+            <div class="column large-half tab-full">
+                <div class="row">
+                    <div class="column large-7 medium-full">
+                        <h4 class="h6">Locacion</h4>
+                        <p>
+                            Ruta 3 Km 32.5 <br>
+                            González Catán <br>
+                            La Matanza
+                        </p>
+
+                        <p>
+                            <a href="https://maps.app.goo.gl/7z9WCC5mss3Xpg4a7" target="_blank"
+                                class="btn btn--footer">Mirar en mapa</a>
+                        </p>
+                    </div>
+                    <div class="column large-5 medium-full">
+                        <h4 class="h6">Enlace rapidos</h4>
+                        <ul class="footer-list">
+                            <li><a href="/">Inicio</a></li>
+                            <li><a href="/register">Registrarse</a></li>
+                            <li><a href="/login">Iniciar sesion</a></li>
+                            <li><a href="#">Contacto</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end footer-top -->
+
+        <div class="row footer-bottom">
+            <div class="column ss-copyright">
+                <span>© Copyright Tesk 2023</span>
+                <span>Design by <a href="">Tesk</a></span>
+            </div>
+        </div> <!-- footer-bottom -->
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 0l8 9h-6v15h-4v-15h-6z" />
+                </svg>
+            </a>
+        </div> <!-- ss-go-top -->
+
+    </footer> <!-- end s-footer -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../../static/js/plugins.js"></script>
+    <script src="../../static/js/main.js"></script>
+
+</body>

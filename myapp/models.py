@@ -34,6 +34,7 @@ class Task(models.Model):
     project = models.ForeignKey(Project, on_delete = models.CASCADE, default = None)
     priority = models.ForeignKey(Priority, on_delete = models.DO_NOTHING, default = None)
     condition = models.ForeignKey(TaskCondition, on_delete = models.DO_NOTHING, default = None)
+    deadline = models.DateField(null = True, blank = True)
 
     def __str__(self):
         return self.title + ' - by ' + self.user.username

@@ -1,6 +1,7 @@
 {% extends 'layouts/base.html' %}
 
 {% block view %}
+<<<<<<< HEAD
 <h3>Proyectos</h3>
 <ul>
     {% for project in projects %}
@@ -9,50 +10,114 @@
         <a href="{% url 'delete_project' project.id %}"><i class='bx bxs-x-circle'></i></a>
         {% block delete_project %}
         {% endblock %}
+=======
+<div class="logo-details">
+    <img src="../../static/images/logo-tesk-l.svg" alt="tesk-logo">
+</div>
+<ul class="nav-links">
+    <li>
+        <a href="/">
+            <i class="bx bx-home"></i>
+            <span class="link_name">Inicio</span>
+        </a>
     </li>
-    {% endfor %}
+    <li>
+        <div class="icon-link">
+            <a href="#">
+                <i class="bx bx-collection"></i>
+                <span class="link_name">Proyectos</span>
+            </a>
+            <i class="bx bxs-chevron-down arrow"></i>
+        </div>
+        <ul class="sub-menu">
+            {% for project in projects %}
+            <li>
+                <a href="{% url 'main_section' project.id %}">{{ project.title }}</a>
+                <a href="#" class="delete-link" onclick="showConfirmation('{{ project.id }}')">x</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <i class="bx bx-bell"></i>
+            <span class="link_name">Notificaciones</span>
+        </a>
+>>>>>>> devAle
+    </li>
 </ul>
 {% endblock %}
 
 {% block create_task %}
-<h1>Crear tarea</h1>
+{% if request.path == '/task/create/' %}
+    <h1>Crear tarea</h1>
+{% else %}
+    <h1>Modificar tarea</h1>
+{% endif %}
+
 {{error}}
-<form action="" method="POST">
-    {% csrf_token %}
-    <label for="id_title">Titulo:</label>
-    <input type="text" name='title' id="id_title" required>
+<div class="contenedor">
+    <div class="container-form">
+        <div class="forms">
+            <form action="" method="POST">
+                {% csrf_token %}
+                
+            <div class="input-field">
+                <label for="id_title">Titulo:</label>
+                <input type="text" name='title' id="id_title" value="{{ task.title }}" required>
+            </div>
+            <div class="input-field">
+                <label for="id_description">Descripcion:</label>
+                <input type="text" name='description' id="id_description" value="{{ task.description }}" required>
+            </div>
+            <div class="input-field">
+                <label for="id_user">Usuario asignado:</label>
+                <select name="user" id="id_user">
+                    {% for user in users %}
+                    <option value="{{ user.id }}" {% if task.user.id == user.id %}selected{% endif %}>{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <label for="id_description">Descripcion:</label>
-    <input type="text" name='description' id="id_description" required>
+            <div class="input-field">
+                <label for="id_project">Proyecto asignado:</label>
+                <select name="project" id="id_project">
+                    {% for project in projects %}
+                    <option value="{{ project.id }}" {% if task.project.id == project.id %}selected{% endif %}>{{project.title}}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <label for="id_user">Usuario asignado:</label>
-    <select name="user" id="id_user">
-        {% for user in users %}
-        <option value="{{ user.id }}">{{user.username}}</option>
-        {% endfor %}
-    </select>
+            <div class="input-field">
+                <label for="deadline">Fecha de entrega:</label>
+                <input type="date" id="deadline" name="deadline" value="2023-01-01" min="2023-01-01" max="2025-12-31" />
+            </div>
 
-    <label for="id_project">Proyecto asignado:</label>
-    <select name="project" id="id_project">
-        {% for project in projects %}
-        <option value="{{ project.id }}">{{project.title}}</option>
-        {% endfor %}
-    </select>
 
-    <label for="id_priority">Prioridad:</label>
-    <select name="priority" id="id_priority">
-        {% for priority in prioritys %}
-        <option value="{{ priority.id }}">{{priority.prio}}</option>
-        {% endfor %}
-    </select>
 
-    <label for="id_condition">Estado:</label>
-    <select name="condition" id="id_condition">
-        {% for condition in conditions %}
-        <option value="{{ condition.id }}">{{condition.condition}}</option>
-        {% endfor %}
-    </select>
 
-    <button>Guardar</button>
-</form>
+            <div class="input-field">
+                <label for="id_priority">Prioridad:</label>
+                <select name="priority" id="id_priority">
+                    {% for priority in prioritys %}
+                    <option value="{{ priority.id }}" {% if task.priority.id == priority.id %}selected{% endif %}>{{priority.prio}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="id_condition">Estado:</label>
+                <select name="condition" id="id_condition">
+                    {% for condition in conditions %}
+                    <option value="{{ condition.id }}" {% if task.condition.id == condition.id %}selected{% endif %}>{{condition.condition}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+                <button>Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock %}
