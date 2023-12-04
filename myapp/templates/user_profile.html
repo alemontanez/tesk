@@ -37,24 +37,46 @@
 </ul>
 {% endblock %}
 
-{% block create_project %}
-<h1>Crear proyecto</h1>
-<div class="contenedor">
-    <div class="container-form">
-        <div class="forms">
-            <form method="POST">
-                {% csrf_token %}
-                <div class="input-field">
-                    <label for="id_title">Titulo:</label>
-                    <input type="text" name='title' id="id_title" required>
-                </div>
-                <div class="input-field">
-                    <label for="id_description">Descripcion:</label>
-                    <input type="text" name='description' id="id_description" required>
-                </div>
-                <button>Crear</button>
-            </form>
-        </div>
-    </div>
-</div>
+{% block content %}
+<form method="POST">
+    {% csrf_token %}   
+      <tr>
+        <th>
+            <label for="id_first_name">Nombre:</label>
+        </th>
+        <td>
+    
+          <input type="text" name="first_name" value="{{user.first_name}}" maxlength="150" id="id_first_name">
+    
+    
+        </td>
+      </tr>
+    
+      <tr>
+        <th><label for="id_last_name">Apellido:</label></th>
+        <td>
+    
+          <input type="text" name="last_name" value="{{user.last_name}}" maxlength="150" id="id_last_name">
+    
+    
+        </td>
+      </tr>
+    
+      <tr>
+        <th><label for="id_email">Dirección de email:</label></th>
+        <td>
+    
+          <input type="email" name="email" maxlength="254" id="id_email">
+    
+    
+        </td>
+      </tr>
+    
+      <tr>
+        <th>
+            <label for="id_date_joined">Fecha de creación:</label>
+        </th>
+      </tr>
+      <button>Guardar cambios</button>
+</form>
 {% endblock %}

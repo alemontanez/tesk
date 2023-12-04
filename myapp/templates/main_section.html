@@ -1,9 +1,9 @@
 {% extends 'layouts/base.html' %}
 
 {% block view %}
+<link rel="stylesheet" href="../../static/styles/table.css" />
 <div class="logo-details">
-    <i class="bx bxl-python"></i>
-    <span class="logo_name">TESK</span>
+    <img src="../../static/images/logo-tesk-l.svg" alt="tesk-logo">
 </div>
 <ul class="nav-links">
     <li>
@@ -24,7 +24,7 @@
             {% for project in projects %}
             <li>
                 <a href="{% url 'main_section' project.id %}">{{ project.title }}</a>
-                <a href="{% url 'delete_project' project.id %}" class="delete-link">x</i></a>
+                <a href="#" class="delete-link" onclick="showConfirmation('{{ project.id }}')">x</a>
             </li>
             {% endfor %}
         </ul>
@@ -43,20 +43,74 @@
 
 <h1>{{project.title}}</h1>
 <br>
+
+{% if tasks|length == 0 %}
+<div>
+    <h2>Tu proyecto aún no tiene tareas asignadas</h2>
+    <br>
+    <div class="button-plus">
+        <a href="/task/create">Crear una tarea <i class='bx bx-plus-circle'></i></a>
+    </div>
+    <br>
+</div>
+
+{% else %}
+
+<div class="button-plus">
+    <div class="container-buttons">
+        <a href="/task/create">Crear una tarea </a>
+        <i class='bx bx-plus-circle'></i>
+    </div>
+</div>
+
+<!-- <div class="contenedor">
+    <div class="parent">
+        <p class="title-title">Titulo</p>
+        <p class="title-user">Usuario</p>
+        <p class="title-description">Descripción</p>
+        <p class="title-created">Fecha de creación</p>
+        <p class="title-deadline">Fecha de entrega</p>
+        <p class="title-datecompleted">Fecha de cierre</p>
+        <p class="title-priority">Prioridad</p>
+        <p class="title-condition">Estado</p>
+        <p class="title-check">Completar</p>
+        <p class="title-edit">Editar</p>
+        <p class="title-delete">Borrar</p>
+        {% for task in tasks %}
+            <p class="title">{{task.title}}</p>
+            <p class="user">{{task.user}}</p>
+            <p class="description">{{task.description}}</p>
+            <p class="created">{{task.created}}</p>
+            <p class="deadline">{{task.deadline}}</p>
+            <p class="datecompleted">
+                {% if task.completed == True %}
+                {{task.datecompleted}}
+                {% endif %}
+            </p >
+            <p class="priority">{{task.priority}}</p>
+            <p class="condition">{{task.condition}}</p>
+            <p class="check"><a href="{% url 'complete_task' task.id %}"><i class='bx bx-check-square'></i></a></p>
+            <p class="edit"><a href="{% url 'update_task' task.id %}"><i class='bx bxs-edit'></i></a></p>
+            <p class="dele"><a href="#" onclick="showConfirmation1('{{ task.id }}')"><i class='bx bx-x-circle'></i></a></p>
+        {% endfor %}
+    </div>
+</div> -->
+
 <div class="contenedor">
     <table class="styled-table">
-        <thead>
+        <thead class="thead">
             <tr>
-                <th>Titulo</th>
-                <th>Usuario</th>
-                <th>Descripción</th>
-                <th>Fecha de creación</th>
-                <th>Fecha de cierre</th>
-                <th>Prioridad</th>
-                <th>Estado</th>
-                <th>Completar</th>
-                <th>Editar</th>
-                <th>Borrar</th>
+                <th class="titles-table">Titulo</th>
+                <th class="titles-table">Usuario</th>
+                <th class="titles-table">Descripción</th>
+                <th class="titles-table">Fecha de creación</th>
+                <th class="titles-table">Fecha de entrega</th>
+                <th class="titles-table">Fecha de cierre</th>
+                <th class="titles-table">Prioridad</th>
+                <th class="titles-table">Estado</th>
+                <th class="titles-table">Completar</th>
+                <th class="titles-table">Editar</th>
+                <th class="titles-table">Borrar</th>
             </tr>
         </thead>
         <tbody>
@@ -64,8 +118,9 @@
             <tr>
                 <td>{{task.title}}</td>
                 <td>{{task.user}}</td>
-                <td>{{task.description}}</td>
+                <td class="description-td">{{task.description}}</td>
                 <td>{{task.created}}</td>
+                <td>{{task.deadline}}</td>
                 <td>
                     {% if task.completed == True %}
                     {{task.datecompleted}}
@@ -75,12 +130,14 @@
                 <td>{{task.condition}}</td>
                 <td><a href="{% url 'complete_task' task.id %}"><i class='bx bx-check-square'></i></a></td>
                 <td><a href="{% url 'update_task' task.id %}"><i class='bx bxs-edit'></i></a></td>
-                <td><a href="{% url 'delete_task' task.id %}"><i class='bx bx-x-circle'></i></a></td>
+                <td><a href="#" onclick="showConfirmation1('{{ task.id }}')"><i class='bx bx-x-circle'></i></a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+{% endif %}
+
 
 
 

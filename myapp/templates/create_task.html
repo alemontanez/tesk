@@ -2,7 +2,7 @@
 
 {% block view %}
 <div class="logo-details">
-    <img src="../../static/images/logo-tesk-l.svg" alt="tesk-logo" width="30" height="30">
+    <img src="../../static/images/logo-tesk-l.svg" alt="tesk-logo">
 </div>
 <ul class="nav-links">
     <li>
@@ -23,7 +23,7 @@
             {% for project in projects %}
             <li>
                 <a href="{% url 'main_section' project.id %}">{{ project.title }}</a>
-                <a href="{% url 'delete_project' project.id %}" class="delete-link">x</i></a>
+                <a href="#" class="delete-link" onclick="showConfirmation('{{ project.id }}')">x</a>
             </li>
             {% endfor %}
         </ul>
@@ -38,7 +38,12 @@
 {% endblock %}
 
 {% block create_task %}
-<h1>Crear tarea</h1>
+{% if request.path == '/task/create/' %}
+    <h1>Crear tarea</h1>
+{% else %}
+    <h1>Modificar tarea</h1>
+{% endif %}
+
 {{error}}
 <div class="contenedor">
     <div class="container-form">
@@ -48,33 +53,43 @@
                 
             <div class="input-field">
                 <label for="id_title">Titulo:</label>
-                <input type="text" name='title' id="id_title" required>
+                <input type="text" name='title' id="id_title" value="{{ task.title }}" required>
             </div>
             <div class="input-field">
                 <label for="id_description">Descripcion:</label>
-                <input type="text" name='description' id="id_description" required>
+                <input type="text" name='description' id="id_description" value="{{ task.description }}" required>
             </div>
             <div class="input-field">
                 <label for="id_user">Usuario asignado:</label>
                 <select name="user" id="id_user">
                     {% for user in users %}
-                    <option value="{{ user.id }}">{{user.username}}</option>
+                    <option value="{{ user.id }}" {% if task.user.id == user.id %}selected{% endif %}>{{ user.username }}</option>
                     {% endfor %}
                 </select>
             </div>
+
             <div class="input-field">
                 <label for="id_project">Proyecto asignado:</label>
                 <select name="project" id="id_project">
                     {% for project in projects %}
-                    <option value="{{ project.id }}">{{project.title}}</option>
+                    <option value="{{ project.id }}" {% if task.project.id == project.id %}selected{% endif %}>{{project.title}}</option>
                     {% endfor %}
                 </select>
             </div>
+
+            <div class="input-field">
+                <label for="deadline">Fecha de entrega:</label>
+                <input type="date" id="deadline" name="deadline" value="2023-01-01" min="2023-01-01" max="2025-12-31" />
+            </div>
+
+
+
+
             <div class="input-field">
                 <label for="id_priority">Prioridad:</label>
                 <select name="priority" id="id_priority">
                     {% for priority in prioritys %}
-                    <option value="{{ priority.id }}">{{priority.prio}}</option>
+                    <option value="{{ priority.id }}" {% if task.priority.id == priority.id %}selected{% endif %}>{{priority.prio}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -82,7 +97,7 @@
                 <label for="id_condition">Estado:</label>
                 <select name="condition" id="id_condition">
                     {% for condition in conditions %}
-                    <option value="{{ condition.id }}">{{condition.condition}}</option>
+                    <option value="{{ condition.id }}" {% if task.condition.id == condition.id %}selected{% endif %}>{{condition.condition}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -91,4 +106,7 @@
         </div>
     </div>
 </div>
+
+
+
 {% endblock %}

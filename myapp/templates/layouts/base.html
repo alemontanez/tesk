@@ -10,9 +10,11 @@
     <link rel="stylesheet" href="../../static/styles/table.css" />
     <!-- Boxiocns CDN Link -->
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../static/images/logo-tesk-small.ico">
+    
 </head>
 
-<!-- <body style="background-color: #959595;"> -->
+<body>
 <section class="container">
     <header class="navbar_container">
         <nav class="navbar">
@@ -20,17 +22,23 @@
                 <!-- Condicion para saber si el usuario esta autenticado o no -->
                 <!-- Si esta autenticado, muestra el link a "Proyectos" y el boton para cerrar sesion. -->
                 {% if user.is_authenticated %}
-                <li>
-                    <a href="/home">Inicio</a>
-                </li>
-                <li>
-                    <a href="/task/create">Crear tarea</a>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">
+                        {{ user.first_name }} {{user.last_name}} 
+                        <i class='bx bx-user'></i>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="#">Mi perfil</a>
+                        <a href="/admin">Panel administrador</a>
+                        <a href="/project/create">Crear proyecto</a>
+                        <a href="/logout">Cerrar sesión</a>
+                    </div>
                 </li>
                 <li>
                     <a href="/project/create">Crear proyecto</a>
                 </li>
                 <li>
-                    <a href="/logout">Cerrar sesion</a>
+                    <a href="/home">Inicio</a>
                 </li>
                 <!-- Si no esta autenticado, van a aparecer las opciones de "Registrar usuario" y/o "Iniciar sesion" -->
                 {% else %}
@@ -63,23 +71,105 @@
 
         {% block create_task %}
         {% endblock %}
+
+
     </main>
 </section>
+
 </body>
+
 <script>
+
     let arrow = document.querySelectorAll('.arrow')
-    for (var i = 0; i < arrow.length; i++) {
+
+    for (let i = 0; i < arrow.length; i++) {
         arrow[i].addEventListener('click', (e) => {
-            let arrowParent = e.target.parentElement.parentElement //selecting main parent of arrow
+            let arrowParent = e.target.parentElement.parentElement
             arrowParent.classList.toggle('showMenu')
         })
     }
-    let sidebar = document.querySelector('.sidebar')
-    let sidebarBtn = document.querySelector('.bx-menu')
-    console.log(sidebarBtn)
-    sidebarBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('close')
-    })
+
+    function showConfirmation(projectId) {
+        var confirmationOverlay = document.createElement('div');
+        confirmationOverlay.className = 'confirmation-overlay';
+
+        var confirmationBox = document.createElement('div');
+        confirmationBox.className = 'confirmation-box';
+
+        var confirmationText = document.createElement('p');
+        confirmationText.innerHTML = '¿Estás seguro de que quieres eliminar este proyecto?';
+
+        var confirmButton = document.createElement('button');
+        confirmButton.innerHTML = 'Sí';
+        confirmButton.addEventListener('click', function () {
+            proceedToDelete(projectId);
+        });
+
+        var cancelButton = document.createElement('button');
+        cancelButton.innerHTML = 'No';
+        cancelButton.addEventListener('click', closeConfirmation);
+
+        confirmationBox.appendChild(confirmationText);
+        confirmationBox.appendChild(confirmButton);
+        confirmationBox.appendChild(cancelButton);
+
+        confirmationOverlay.appendChild(confirmationBox);
+        document.body.appendChild(confirmationOverlay);
+    }
+
+    function proceedToDelete(projectId) {
+        // Redirige a la URL de eliminación
+        window.location.href = "{% url 'delete_project' 0 %}".replace('0', projectId);
+    }
+
+    function closeConfirmation() {
+        var confirmationOverlay = document.querySelector('.confirmation-overlay');
+        confirmationOverlay.parentNode.removeChild(confirmationOverlay);
+    }
+
+    /* modal para borrar tarea */
+
+    function showConfirmation1(taskId) {
+        var confirmationOverlay = document.createElement('div');
+        confirmationOverlay.className = 'confirmation-overlay';
+
+        var confirmationBox = document.createElement('div');
+        confirmationBox.className = 'confirmation-box';
+
+        var confirmationText = document.createElement('p');
+        confirmationText.innerHTML = '¿Estás seguro de que quieres eliminar esta tarea?';
+
+        var confirmButton = document.createElement('button');
+        confirmButton.innerHTML = 'Sí';
+        confirmButton.addEventListener('click', function () {
+            proceedToDelete1(taskId);
+        });
+
+        var cancelButton = document.createElement('button');
+        cancelButton.innerHTML = 'No';
+        cancelButton.addEventListener('click', closeConfirmation);
+
+        confirmationBox.appendChild(confirmationText);
+        confirmationBox.appendChild(confirmButton);
+        confirmationBox.appendChild(cancelButton);
+
+        confirmationOverlay.appendChild(confirmationBox);
+        document.body.appendChild(confirmationOverlay);
+    }
+
+    function proceedToDelete1(taskId) {
+        // Redirige a la URL de eliminación
+        window.location.href = "{% url 'delete_task' 0 %}".replace('0', taskId);
+    }
+
+    function closeConfirmation() {
+        var confirmationOverlay = document.querySelector('.confirmation-overlay');
+        confirmationOverlay.parentNode.removeChild(confirmationOverlay);
+    }
+
+
+    
+
 </script>
 
 </html>

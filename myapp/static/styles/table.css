@@ -2,8 +2,6 @@
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -16,18 +14,22 @@
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;
-}
-
-.styled-table td:nth-child(8) {
-    text-align: center;
+    color: #ffff;
 }
 
 .styled-table td:nth-child(9) {
     text-align: center;
+    font-size: 24px;
 }
 
 .styled-table td:nth-child(10) {
     text-align: center;
+    font-size: 24px;
+}
+
+.styled-table td:nth-child(11) {
+    text-align: center;
+    font-size: 24px;
 }
 
 .styled-table tbody tr {
@@ -55,7 +57,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 40vw;
+    width: 30vw;
     border-radius: 32px;
     background: var(--sidebar, rgba(1, 1, 1, 0.50));
 }
@@ -89,4 +91,12 @@ a {
 
 .input-field input{
     width: 100%;
+}
+
+.input-field select{
+    width: 130px;
+}
+
+.titles-table{
+    max-width: 150px;
 }

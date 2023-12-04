@@ -11,6 +11,9 @@ urlpatterns = [
     path("logout/", views.signout_user, name = "signout_user"),
     path("register/", views.register_user, name = "register_user"),
 
+    # Ruta perfil de usuario
+    path("settings/profile/", views.user_profile, name = "user_profile"),
+
     # Rutas de proyectos
     path("project/create/", views.create_project, name = "create_project"),
     path("project/<int:project_id>/", views.main_section, name = "main_section"),
